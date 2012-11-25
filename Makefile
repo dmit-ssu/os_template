@@ -1,5 +1,5 @@
 TARGET  := test
-TARGETS := second
+TARGETS := second third
 SRCS    := main.c
 OBJS    := ${SRCS:.c=.o} 
 DEPS    := ${SRCS:.c=.dep} 
