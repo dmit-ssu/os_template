@@ -1,4 +1,5 @@
 TARGET  := test
+TARGETS := second
 SRCS    := main.c
 OBJS    := ${SRCS:.c=.o} 
 DEPS    := ${SRCS:.c=.dep} 
@@ -10,12 +11,15 @@ LIBS    =
 
 CC      = gcc
 
-.PHONY: all clean distclean 
-all:: ${TARGET} 
+.PHONY: all all_targets clean clean_targets distclean
+all:: ${TARGET} all_targets
 
 ifneq (${XDEPS},) 
 include ${XDEPS} 
 endif 
+
+all_targets: $(patsubst %, Makefile.%, $(TARGETS))
+	make -f $<
 
 ${TARGET}: ${OBJS} 
 	${CC} ${LDFLAGS} -o $@ $^ ${LIBS} 
@@ -26,7 +30,10 @@ ${OBJS}: %.o: %.c %.dep
 ${DEPS}: %.dep: %.c Makefile 
 	${CC} ${CCFLAGS} -MM $< > $@ 
 
-clean:
+clean_targets: $(patsubst %, Makefile.%, $(TARGETS))
+	make -f $< clean
+
+clean: clean_targets
 	rm -f *~ ${DEPS} ${OBJS} ${TARGET}
 
 distclean:: clean
