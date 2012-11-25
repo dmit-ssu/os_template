@@ -19,7 +19,7 @@ include ${XDEPS}
 endif 
 
 all_targets: $(patsubst %, Makefile.%, $(TARGETS))
-	make -f $<
+	$(patsubst %,make -f Makefile.%;, $(TARGETS))
 
 ${TARGET}: ${OBJS} 
 	${CC} ${LDFLAGS} -o $@ $^ ${LIBS} 
@@ -31,7 +31,7 @@ ${DEPS}: %.dep: %.c Makefile
 	${CC} ${CCFLAGS} -MM $< > $@ 
 
 clean_targets: $(patsubst %, Makefile.%, $(TARGETS))
-	make -f $< clean
+	$(patsubst %,make -f Makefile.% clean;, $(TARGETS))
 
 clean: clean_targets
 	rm -f *~ ${DEPS} ${OBJS} ${TARGET}
