@@ -1,4 +1,4 @@
-TARGET  := test
+TARGET  := main
 TARGETS := second third
 SRCS    := main.c
 OBJS    := ${SRCS:.c=.o} 
