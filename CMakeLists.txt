@@ -3,4 +3,4 @@ project (TEMPLATE)
 
 set(CMAKE_C_FLAGS "-std=gnu99 -O2 -Wall -Werror -ggdb")
 
-add_executable (test main.c)
+add_executable (main main.c)
